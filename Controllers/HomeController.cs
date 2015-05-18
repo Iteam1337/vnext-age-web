@@ -9,6 +9,13 @@ namespace FaceProxy.Web
         {
             return View(CreateUser());
         }
+        
+        [HttpPost]
+        public JsonResult Create()
+        {
+            var primary = "74847df195954443bea84965b272a072";
+            return Json(primary);        
+        }
 
         public User CreateUser()
         {

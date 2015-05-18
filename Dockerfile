@@ -1,6 +1,8 @@
 FROM tutum.co/iteamdev/aspnet-helloworld
-ADD . /app
+ADD ./project.json /app/project.json
 WORKDIR /app
 RUN ["dnu", "restore"]
+
+ADD . /app
 EXPOSE 5004
-ENTRYPOINT ["dnx", ".", "kestrel"]
+CMD sleep 100000000000 | dnx . kestrel
