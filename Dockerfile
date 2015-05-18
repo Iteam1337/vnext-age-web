@@ -1,4 +1,4 @@
-FROM microsoft/aspnet
+FROM tutum.co/iteamdev/aspnet-helloworld
 ADD . /app
 WORKDIR /app
 RUN ["dnu", "restore"]
