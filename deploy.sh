@@ -1,3 +1,3 @@
-docker build -t web .
-docker tag -f web tutum.co/iteamdev/aspnet-helloworld
-docker push tutum.co/iteamdev/aspnet-helloworld
+docker build -t faceproxy .
+docker tag -f faceproxy tutum.co/iteamdev/aspnet-faceproxy
+docker push tutum.co/iteamdev/aspnet-faceproxy

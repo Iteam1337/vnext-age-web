@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MvcSample.Web.Models
+namespace FaceProxy.Web.Models
 {
     public class User
     {

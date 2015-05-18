@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Mvc;
-using MvcSample.Web.Models;
+using FaceProxy.Web.Models;
 
-namespace MvcSample.Web
+namespace FaceProxy.Web
 {
     public class HomeController : Controller
     {
