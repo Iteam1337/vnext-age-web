@@ -20,12 +20,6 @@ namespace HelloMvc
             });
 
             app.UseWelcomePage();
-
-            Console.CancelKeyPress += (sender, eventArgs) => 
-            {
-                eventArgs.Cancel = true;
-                autoResetEvent.Set();
-            };
         }
     }
 }
