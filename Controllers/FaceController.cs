@@ -1,5 +1,4 @@
-using Microsoft.AspNet.Mvc;
-using FaceProxy.Web.Models;
+using System.Threading.Tasks;
 using System.Dynamic;
 using System.IO;
 using System.Net;
@@ -61,11 +60,6 @@ namespace FaceProxy.Web
         /// </summary>
         private string subscriptionKey;
 
-        /// <summary>
-        /// The default resolver.
-        /// </summary>
-        private CamelCasePropertyNamesContractResolver defaultResolver = new CamelCasePropertyNamesContractResolver();
-
         #endregion
             
         /// <summary>
@@ -77,7 +71,7 @@ namespace FaceProxy.Web
         /// <param name="analyzesGender">If set to <c>true</c> [analyzes gender].</param>
         /// <param name="analyzesHeadPose">If set to <c>true</c> [analyzes head pose].</param>
         /// <returns>The detected faces.</returns>
-        public async Task<Dynamic> DetectAsync(string url, bool analyzesFaceLandmarks = false, bool analyzesAge = false, bool analyzesGender = false, bool analyzesHeadPose = false)
+        public async string Detect(string url, bool analyzesFaceLandmarks = false, bool analyzesAge = false, bool analyzesGender = false, bool analyzesHeadPose = false)
         {
             var requestUrl = string.Format(
                 "{0}/{1}?analyzesFaceLandmarks={2}&analyzesAge={3}&analyzesGender={4}&analyzesHeadPose={5}&{6}={7}",
@@ -89,40 +83,35 @@ namespace FaceProxy.Web
                 analyzesHeadPose,
                 SubscriptionKeyName,
                 this.subscriptionKey);
-            var request = WebRequest.Create(requestUrl);
+                
+            using(var wc = new System.Net.WebClient())
+            {
 
-            dynamic requestBody = new ExpandoObject();
-            requestBody.url = url;
-
-            return await this.SendAsync<ExpandoObject, Dynamic>("POST", requestBody, request);
+                dynamic requestBody = new ExpandoObject();
+                requestBody.url = url;
+                var response = wc.UploadString(requestUrl, Json(requestBody));
+                return response;
+            }
         }
+
     }
 
     public class FaceController : Controller
     {
-        public JsonResult Index()
-        {
-            var primary = "74847df195954443bea84965b272a072";
-
-            var response = new { name = "Radu", role = "sucker"};
-
-            return Json(response);        
-        }
-
         [HttpPost]
-        public JsonResult Index(string tweet)
+        public JsonResult Index(DynamicObject tweet)
         {
             // TODO:
             // Parse json
             // Get image url from tweet: tweet.media_url
             // Send the image url to Face API with this key
-            var primary = "74847df195954443bea84965b272a072";
+            var apiKey = "74847df195954443bea84965b272a072";
 
             // adjust/parse the response?
-            var response = FaceApi.DetectAsync(tweet.media_url);
+            var response = FaceApi.Detect(tweet.media_url as string);
 
             // send it back as json 
-            return Json(tweet);        
+            return Json(response);        
         }
     }
 }
