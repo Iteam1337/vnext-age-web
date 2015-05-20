@@ -10,7 +10,7 @@ namespace FaceProxy.Web
         [HttpGet]
         public JsonResult Index(string url)
         {
-            var response = _faceApi.DetectAsync(url);
+            var response = _faceApi.DetectAsync(url, false, true, true, false);
             return Json(response);        
         }
     }

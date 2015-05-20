@@ -77,7 +77,7 @@ namespace FaceProxy.Web.Services
         /// <param name="analyzesGender">If set to <c>true</c> [analyzes gender].</param>
         /// <param name="analyzesHeadPose">If set to <c>true</c> [analyzes head pose].</param>
         /// <returns>The detected faces.</returns>
-        public async Task<dynamic> DetectAsync(string url, bool analyzesFaceLandmarks = false, bool analyzesAge = true, bool analyzesGender = false, bool analyzesHeadPose = false)
+        public async Task<dynamic> DetectAsync(string url, bool analyzesFaceLandmarks = false, bool analyzesAge = false, bool analyzesGender = false, bool analyzesHeadPose = false)
         {
             var requestUrl = string.Format(
                 "{0}/{1}?analyzesFaceLandmarks={2}&analyzesAge={3}&analyzesGender={4}&analyzesHeadPose={5}&{6}={7}",
