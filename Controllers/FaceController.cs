@@ -10,6 +10,9 @@ namespace FaceProxy.Web
         [HttpGet]
         public JsonResult Index(string url)
         {
+            string [] origin = new string [1];
+            origin[0] = "*";
+            Response.Headers.Add("Access-Control-Allow-Origin", origin);
             var response = _faceApi.DetectAsync(url, false, true, true, false);
             return Json(response);        
         }
