@@ -128,14 +128,14 @@ namespace FaceProxy.Web
                 dynamic requestBody = new ExpandoObject();
                 requestBody.url = url;
                 var response = wc.UploadString(requestUrl, Json(requestBody));
-                return response;
+                return Json(response);
             }
         
             // adjust/parse the response?
             //var response = FaceApi.Detect(tweet.media_url as string);
 
             // send it back as json 
-            return Json(response);        
+            //return Json(response);        
         }
     }
 }
