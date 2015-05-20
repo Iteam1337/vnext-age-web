@@ -8,9 +8,11 @@ Read more about aspnet here: https://github.com/aspnet/home
 
 Install the necessary stuff via brew.
 
-`brew tap aspnet/dnx`
-`brew update`
-`brew install dnvm`
+```
+brew tap aspnet/dnx
+brew update
+brew install dnvm
+```
 
 Run.
 
