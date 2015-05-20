@@ -4,16 +4,18 @@ using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Serialization;
 using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Http;
 using System;
 using Newtonsoft.Json;
 
 namespace FaceProxy.Web
 {
 
-    public class FaceApi {
+    public class FaceApi
+    {
 
-        #region private members
+        public FaceApi(string apiKey) {
+            subscriptionKey = apiKey;
+        }
 
         /// <summary>
         /// The service host.
@@ -63,12 +65,10 @@ namespace FaceProxy.Web
         /// <summary>
         /// The subscription key.
         /// </summary>
-        private string subscriptionKey = "74847df195954443bea84965b272a072";
+        private string subscriptionKey;
         
         private CamelCasePropertyNamesContractResolver defaultResolver = new CamelCasePropertyNamesContractResolver();
 
-        #endregion
-            
         /// <summary>
         /// Detects an URL asynchronously.
         /// </summary>
@@ -97,33 +97,7 @@ namespace FaceProxy.Web
 
             return await this.SendAsync<ExpandoObject, dynamic>("POST", requestBody, request);
         }
-            
-        /// <summary>
-        /// Detects an URL asynchronously.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <param name="analyzesFaceLandmarks">If set to <c>true</c> [analyzes face landmarks].</param>
-        /// <param name="analyzesAge">If set to <c>true</c> [analyzes age].</param>
-        /// <param name="analyzesGender">If set to <c>true</c> [analyzes gender].</param>
-        /// <param name="analyzesHeadPose">If set to <c>true</c> [analyzes head pose].</param>
-        /// <returns>The detected faces.</returns>
-        
-        /*
-        public void Detect(string url, bool analyzesFaceLandmarks = false, bool analyzesAge = false, bool analyzesGender = false, bool analyzesHeadPose = false)
-        {
-            var requestUrl = RequestUrl();
-                
-            using(var wc = new System.Net.WebClient())
-            {
 
-                dynamic requestBody = new ExpandoObject();
-                requestBody.url = url;
-                var response = wc.UploadString(requestUrl, Json(requestBody));
-                return response;
-            }
-        }
-        */
-        
         /// <summary>
         /// Processes the asynchronous response.
         /// </summary>
@@ -309,29 +283,17 @@ namespace FaceProxy.Web
 
     public class FaceController : Controller
     {
+        private readonly FaceApi _faceApi = new FaceApi("74847df195954443bea84965b272a072");
+        
         [HttpGet]
         public JsonResult Index(string url)
         {
-            // TODO:
-            // Parse json
-            // Get image url from tweet: tweet.media_url
-            // Send the image url to Face API with this key
-            var apiKey = "74847df195954443bea84965b272a072";
-            var faceApi = new FaceApi();
-
-// OMG THIS EDITOR DOES NOT INDENT PROPERLY AFTER INSERTING A LINE BREAK
-
-            var requestUrl = faceApi.RequestUrl();
-            
-            // adjust/parse the response?
-            var response = faceApi.DetectAsync(url);
-
-            // send it back as json 
+            var response = _faceApi.DetectAsync(url);
             return Json(response);        
         }
     }
     
-    /// <summary>
+    	/// <summary>
         /// This class is used to pass on "state" between each Begin/End call
         /// It also carries the user supplied "state" object all the way till
         /// the end where is then hands off the state object to the
