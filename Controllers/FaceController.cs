@@ -13,7 +13,7 @@ namespace FaceProxy.Web
             string [] origin = new string [1];
             origin[0] = "*";
             Response.Headers.Add("Access-Control-Allow-Origin", origin);
-            var response = _faceApi.DetectAsync(url, false, true, true, false);
+            var response = _faceApi.DetectAsync(url, true, true, true, true);
             return Json(response);        
         }
     }
